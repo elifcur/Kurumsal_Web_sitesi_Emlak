@@ -1,0 +1,57 @@
+/*
+ * Shared, design-neutral layer imported by every template's css/app.css.
+ * Templates define their own @theme (colors, fonts) and component classes;
+ * this file only covers the pieces the core views rely on.
+ */
+
+[x-cloak] { display: none !important; }
+
+@utility btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+    }
+}
+
+@layer components {
+    .container-x {
+        @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+    }
+
+    .form-input {
+        @apply w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none;
+    }
+
+    .form-label {
+        @apply mb-1.5 block text-sm font-medium text-slate-700;
+    }
+
+    .form-error {
+        @apply mt-1 text-xs text-red-600;
+    }
+
+    /* Rich content coming from the admin editor */
+    .prose-cms {
+        @apply text-base leading-relaxed text-slate-700;
+    }
+    .prose-cms > * + * { @apply mt-4; }
+    .prose-cms h1 { @apply text-3xl font-bold text-slate-900 mt-8; }
+    .prose-cms h2 { @apply text-2xl font-bold text-slate-900 mt-8; }
+    .prose-cms h3 { @apply text-xl font-semibold text-slate-900 mt-6; }
+    .prose-cms h4 { @apply text-lg font-semibold text-slate-900; }
+    .prose-cms p { @apply leading-7; }
+    .prose-cms a { @apply text-primary underline underline-offset-2; }
+    .prose-cms ul { @apply list-disc pl-6 space-y-1; }
+    .prose-cms ol { @apply list-decimal pl-6 space-y-1; }
+    .prose-cms blockquote { @apply border-l-4 border-primary/40 pl-4 italic text-slate-600; }
+    .prose-cms img { @apply rounded-xl max-w-full h-auto; }
+    .prose-cms table { @apply w-full text-sm border-collapse; }
+    .prose-cms th, .prose-cms td { @apply border border-slate-200 px-3 py-2 text-left; }
+    .prose-cms pre { @apply rounded-lg bg-slate-900 p-4 text-sm text-slate-100 overflow-x-auto; }
+    .prose-cms strong { @apply font-semibold text-slate-900; }
+    .prose-cms iframe { @apply w-full aspect-video rounded-xl; }
+}
