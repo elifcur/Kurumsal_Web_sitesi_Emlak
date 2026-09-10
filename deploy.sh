@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ------------------------------------------------------------------
-# Corporate Templates - cPanel / paylaşımlı hosting deploy betiği
+# Emlak Sitesi - cPanel / paylaşımlı hosting deploy betiği
 # Kullanım (SSH ile uygulama dizininde):  bash deploy.sh
 # Demo içerik de yüklemek için:            SEED_DEMO=1 bash deploy.sh
 # ------------------------------------------------------------------

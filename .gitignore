@@ -1,30 +1,40 @@
-*.log
-.DS_Store
+# Ortam / gizli bilgiler
 .env
 .env.backup
 .env.production
-.phpactor.json
+/auth.json
+/storage/*.key
+
+# Bağımlılıklar
+/node_modules
+/vendor
+
+# Laravel çalışma dosyaları
+/public/hot
+/public/storage
+/public/fonts-manifest.dev.json
+/storage/pail
+/.phpunit.cache
 .phpunit.result.cache
+*.log
+_ide_helper.php
+.phpactor.json
+Homestead.json
+Homestead.yaml
+
+# Editör / IDE
 /.codex
 /.cursor/
 /.idea
 /.nova
-/.phpunit.cache
 /.vscode
 /.zed
-/auth.json
-/node_modules
-/public/fonts-manifest.dev.json
-/public/hot
-/public/storage
-/storage/*.key
-/storage/pail
-/vendor
-_ide_helper.php
-Homestead.json
-Homestead.yaml
+
+# İşletim sistemi
+.DS_Store
 Thumbs.db
+
+# Yerel demo verisi ve ekran görüntüleri
 /database/demo
 /images
-.DS_Store
 /*.png

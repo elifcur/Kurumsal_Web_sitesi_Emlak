@@ -1,1 +1,0 @@
-import{n as e,t}from"./site-aefaPsNa.js";t.data(`publicationFilters`,()=>({submit(){this.$root.requestSubmit()}})),e();
