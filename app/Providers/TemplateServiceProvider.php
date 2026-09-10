@@ -31,13 +31,20 @@ class TemplateServiceProvider extends ServiceProvider
     {
         $template = $this->app->make(TemplateManager::class)->active();
 
-        View::addNamespace('template', $template->viewsPath());
+        /*
+         * Template views win; anything the template does not ship falls back to
+         * the neutral core views in resources/views/site. Anonymous components
+         * resolve the same way (template first, then core).
+         */
+        View::addNamespace('template', [$template->viewsPath(), resource_path('views/site')]);
         View::share('template', $template);
         View::composer('template::layouts.*', NavigationComposer::class);
 
         if (is_dir($template->viewsPath().'/components')) {
             Blade::anonymousComponentPath($template->viewsPath().'/components');
         }
+
+        Blade::anonymousComponentPath(resource_path('views/site/components'));
 
         if (is_dir($template->migrationsPath())) {
             $this->loadMigrationsFrom($template->migrationsPath());

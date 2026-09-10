@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Middleware\EnsureModuleIsActive;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\SecurityHeaders;
 use Illuminate\Foundation\Application;
@@ -26,7 +25,6 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'admin' => EnsureUserIsAdmin::class,
-            'module' => EnsureModuleIsActive::class,
         ]);
 
         $middleware->redirectGuestsTo(fn (Request $request) => route('admin.login'));

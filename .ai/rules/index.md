@@ -4,7 +4,8 @@ Before planning or editing, find the row whose globs match the file's path and r
 
 | Applies to | Rule file |
 | --- | --- |
-| templates/business/** | .ai/rules/business.md |
 | templates/*/css/app.css | .ai/rules/css.md |
+| resources/css/base.css | .ai/rules/css.md |
 | templates/** | .ai/rules/templates.md |
+| resources/views/site/** | .ai/rules/templates.md |
 | tests/** | .ai/rules/tests.md |

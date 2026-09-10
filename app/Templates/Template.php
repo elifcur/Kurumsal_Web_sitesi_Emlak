@@ -20,7 +20,8 @@ abstract class Template
     abstract public function description(): string;
 
     /**
-     * Data passed to the "template::home" view.
+     * Data passed to the "template::home" view. Views not shipped by the
+     * template fall back to resources/views/site (see TemplateServiceProvider).
      *
      * @return array<string, mixed>
      */
@@ -62,6 +63,28 @@ abstract class Template
     public function supports(string $feature): bool
     {
         return (bool) ($this->features()[$feature] ?? false);
+    }
+
+    /** Icon shown next to the site name when no logo is uploaded. */
+    public function icon(): string
+    {
+        return 'building';
+    }
+
+    /** Bunny Fonts family query loaded by the shared layout. */
+    public function fonts(): string
+    {
+        return 'inter:400,500,600,700|instrument-serif:400,400i';
+    }
+
+    /**
+     * Subject options offered by the shared contact form.
+     *
+     * @return array<int, string>
+     */
+    public function contactSubjects(): array
+    {
+        return ['Bilgi almak istiyorum', 'Teklif almak istiyorum', 'İş birliği teklifi', 'Diğer'];
     }
 
     /**

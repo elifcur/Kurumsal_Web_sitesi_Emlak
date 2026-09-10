@@ -160,7 +160,7 @@
     @if($team->isNotEmpty())
         <section class="section">
             <div class="container-x">
-                <x-section-heading eyebrow="Ekibimiz" :title="setting('team_home_title', 'Uzman Danışmanlarımız')" :actionUrl="route('team.index')" actionLabel="Tüm Ekibi Gör" />
+                <x-section-heading eyebrow="Ekibimiz" :title="setting('team_title', 'Uzman Danışmanlarımız')" :actionUrl="route('team.index')" actionLabel="Tüm Ekibi Gör" />
                 <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     @foreach($team as $member)<x-team-card :member="$member" />@endforeach
                 </div>

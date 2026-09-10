@@ -1,8 +1,28 @@
 /*
- * Shared, design-neutral layer imported by every template's css/app.css.
- * Templates define their own @theme (colors, fonts) and component classes;
- * this file only covers the pieces the core views rely on.
+ * Shared layer imported by every template's css/app.css. Defines the neutral
+ * design tokens and component classes the core views (resources/views/site,
+ * errors, pagination) rely on. Templates override tokens in their own @theme
+ * and may redefine any class below after the import.
  */
+
+@source '../views/site/**/*.blade.php';
+@source '../views/components/*.blade.php';
+@source '../views/errors/*.blade.php';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+@theme {
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Instrument Serif', 'Georgia', serif;
+
+    --color-primary: #1d4ed8;
+    --color-primary-dark: #1e3a8a;
+    --color-primary-light: #e8eefb;
+    --color-primary-contrast: #ffffff;
+    --color-accent: #f59e0b;
+    --color-accent-dark: #d97706;
+    --color-sand: #f8f7f4;
+    --color-ink: #0f172a;
+}
 
 [x-cloak] { display: none !important; }
 
@@ -15,6 +35,22 @@
         scroll-behavior: smooth;
         -webkit-text-size-adjust: 100%;
     }
+
+    body {
+        @apply bg-white text-slate-700 antialiased;
+        font-family: var(--font-sans);
+    }
+
+    h1, h2 {
+        font-family: var(--font-display);
+        font-weight: 400;
+        letter-spacing: -0.01em;
+    }
+
+    h1 em, h2 em {
+        font-style: italic;
+        color: var(--color-accent);
+    }
 }
 
 @layer components {
@@ -22,6 +58,37 @@
         @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
     }
 
+    /* Buttons */
+    .btn-primary { @apply btn rounded-md bg-primary text-primary-contrast hover:bg-primary-dark; }
+    .btn-accent { @apply btn rounded-md bg-accent text-ink hover:bg-accent-dark; }
+    .btn-outline { @apply btn rounded-md border border-slate-300 bg-white text-slate-800 hover:border-primary hover:text-primary; }
+    .btn-outline-light { @apply btn rounded-md border border-white/60 text-white hover:bg-white/10; }
+    .btn-light { @apply btn rounded-md bg-white text-ink hover:bg-slate-100; }
+
+    /* Sections & headings */
+    .section { @apply py-16 md:py-24; }
+    .section-title { @apply font-display text-4xl tracking-tight text-ink md:text-5xl; }
+    .section-subtitle { @apply mt-4 max-w-2xl text-lg text-slate-600; }
+    .section-line { @apply mt-4 block h-0.5 w-12 bg-accent; }
+    .eyebrow { @apply mb-3 block text-xs font-medium tracking-[0.25em] text-slate-500 uppercase; }
+    .eyebrow-accent { @apply text-accent; }
+    .link-arrow { @apply inline-flex items-center gap-1.5 text-sm font-medium text-ink underline decoration-accent decoration-2 underline-offset-8 transition hover:text-primary; }
+
+    .hero-overlay { background: linear-gradient(90deg, rgb(from var(--color-ink) r g b / 0.88) 0%, rgb(from var(--color-ink) r g b / 0.55) 45%, rgb(from var(--color-ink) r g b / 0.1) 100%); }
+    .page-overlay { background: linear-gradient(180deg, rgb(from var(--color-ink) r g b / 0.75) 0%, rgb(from var(--color-ink) r g b / 0.85) 100%); }
+
+    .logo-grid { @apply grid grid-cols-2 border-t border-l border-slate-200 sm:grid-cols-3 lg:grid-cols-6; }
+    .logo-grid > * { @apply flex h-24 items-center justify-center border-r border-b border-slate-200 bg-white px-6 text-sm font-semibold text-slate-500 grayscale transition hover:grayscale-0; }
+
+    .card { @apply rounded-lg border border-slate-200/70 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md; }
+    .chip { @apply inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700; }
+
+    /* Navigation */
+    .nav-link { @apply relative px-2.5 py-2 text-[13px] xl:px-3 xl:text-sm font-medium whitespace-nowrap text-slate-700 transition hover:text-primary; }
+    .nav-link-active { @apply text-ink; }
+    .nav-link-active::after { content: ''; @apply absolute inset-x-3 -bottom-1 h-0.5 bg-accent; }
+
+    /* Forms */
     .form-input {
         @apply w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none;
     }

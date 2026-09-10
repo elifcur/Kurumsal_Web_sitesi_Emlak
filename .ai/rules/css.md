@@ -1,12 +1,13 @@
 ---
 paths:
   - 'templates/*/css/app.css'
+  - 'resources/css/base.css'
 ---
 
 # Css
 
-## Shared visual language: Statamic-inspired (light hero, serif display headings, dark primary button)
-All templates share one design DNA modelled on statamic.com: light warm `.hero-bg` centred hero (never a dark hero), serif `--font-display` for h1/h2 with `*word*` → italic accent via the `emphasize()` helper, `.btn-primary` dark (slate-900) + `.btn-outline` thin border + `.btn-brand` for the sector colour, `.eyebrow` soft pill, `.logo-grid` thin-bordered partner grid right under the hero, section headings left-aligned with an outline "Tümünü Gör" on the right. Dark backgrounds only for the CTA band and footer. Sector identity (colours, icons, sector sections) stays. Reference: templates/real-estate.
+## Shared classes and default tokens live in base.css; templates only override @theme
+resources/css/base.css (imported by every template's css/app.css right after tailwindcss) declares the neutral design tokens (--color-primary/-dark/-light/-contrast, --color-accent/-dark, --color-sand, --color-ink, --font-sans, --font-display) and every component class the core views need (.btn-*, .section*, .eyebrow, .link-arrow, .card, .chip, .nav-link*, .logo-grid, .hero-overlay, .page-overlay, .form-*, .prose-cms, .container-x). It also carries the @source lines for resources/views/site, components, errors and pagination. A template's app.css should contain `@source '../views/**/*.blade.php'`, a `@theme` block that overrides the colour tokens, and only sector-specific classes (e.g. real-estate's .badge-sale, .search-*). Redefining a shared class after the import is allowed (cascade order wins) but avoid it unless the sector design demands it.
 
-## Visual language (revised 2026-09-09): photo-driven hero per sector mockup in images/
-Supersedes the "light Statamic hero" rule. Each template follows its mockup in images/<sector>.png: full-width photo hero (`setting('hero_image')`, dark side gradient, left-aligned white heading with the accent-coloured second line via emphasize()), icon feature strip right under the hero, serif section h2 with a short accent underline and an underlined "Tümünü Gör →" link, photo-topped cards with small radius, stats strip with icons and a quote, dark 4-column footer. Demo photos/logos cropped from the mockups live in public/images/templates/<key>/ and are assigned by each DemoSeeder. Sector colours: real-estate green #1f3d2e + gold, clinic teal #0f6f85 (light hero overlay), industry navy + orange #f5841f, law black + gold #b8965a, business brown + orange #c2591b.
+## Visual language: serif display headings, photo hero, accent underline
+All templates share one design DNA: Inter body + Instrument Serif h1/h2 (`*word*` → italic accent via emphasize()), full-width photo hero (`setting('hero_image')`, dark side gradient via .hero-overlay, left-aligned white heading), serif section h2 with a short accent underline (.section-line) and an underlined "Tümünü Gör →" link (.link-arrow), photo-topped cards with small radius, stats strip with icons and a quote, dark 4-column footer. Sector identity comes from the @theme colours: corporate blue #1d4ed8 + amber, real-estate green #1f3d2e + gold.

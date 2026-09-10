@@ -1,0 +1,19 @@
+@import 'tailwindcss';
+@import '../../../resources/css/base.css';
+
+@source '../views/**/*.blade.php';
+
+/*
+ * Kurumsal şablon: base.css'teki nötr mavi/amber tokenlarını olduğu gibi
+ * kullanır. Yeni bir sektör şablonu türetirken bu dosyayı kopyalayıp
+ * @theme bloğunda renkleri değiştirmek yeterlidir.
+ */
+@theme {
+    --color-primary: #1d4ed8;
+    --color-primary-dark: #1e3a8a;
+    --color-primary-light: #e8eefb;
+    --color-accent: #f59e0b;
+    --color-accent-dark: #d97706;
+    --color-sand: #f8f7f4;
+    --color-ink: #0f172a;
+}

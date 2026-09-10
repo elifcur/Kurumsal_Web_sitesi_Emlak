@@ -1,6 +1,6 @@
 # cPanel Deploy Rehberi
 
-Bu uygulama klasik cPanel paylaşımlı hosting (PHP 8.3+, MySQL/MariaDB, Composer) üzerinde çalışacak şekilde hazırlanmıştır. Bu paket **emlak (`real-estate`) şablonu** ile teslim edilir; `.env` içindeki `APP_TEMPLATE=real-estate` satırı değiştirilmemelidir.
+Bu uygulama klasik cPanel paylaşımlı hosting (PHP 8.3+, MySQL/MariaDB, Composer) üzerinde çalışacak şekilde hazırlanmıştır. Her müşteriye **tek bir sektör şablonu** ile teslim edilir; şablon `.env` içindeki `APP_TEMPLATE` ile seçilir.
 
 ## Gereksinimler
 
@@ -13,13 +13,15 @@ Bu uygulama klasik cPanel paylaşımlı hosting (PHP 8.3+, MySQL/MariaDB, Compos
 
 cPanel > *Select PHP Version* ekranından PHP sürümünü ve eklentileri seçin. `upload_max_filesize` ve `post_max_size` değerlerini en az `8M` yapın (`CMS_UPLOAD_MAX_KB` ile uyumlu olmalı).
 
-## 0. Varlıkları güncelleme (geliştirici makinesinde)
-
-`public/build` repoya commit'lidir. Tasarımda (`templates/real-estate/css`, `js`, `views`) değişiklik yaptıysanız yüklemeden önce yeniden derleyip commit'leyin:
+## 0. Teslim paketi hazırlama (geliştirici makinesinde)
 
 ```bash
-npm run build
+php artisan template:use real-estate   # müşterinin şablonu (template:list ile görün)
+npm run build                          # public/build güncel olsun (repoya commit'lidir)
+php artisan template:prune --force     # diğer şablon klasörlerini sil (isteğe bağlı, önerilir)
 ```
+
+Prune sonrası yalnızca seçilen şablon kalır; `public/build` içindeki diğer şablon varlıkları zararsızdır.
 
 ## 1. Dosyaları yükleme
 
@@ -51,10 +53,10 @@ Projeyi doğrudan `public_html` içine açarsanız kökteki `.htaccess` istekler
 
 ```bash
 cp .env.production.example .env
-nano .env   # DB_*, APP_URL, MAIL_*, ADMIN_* değerlerini doldurun
+nano .env   # APP_TEMPLATE, DB_*, APP_URL, MAIL_*, ADMIN_* değerlerini doldurun
 ```
 
-Zorunlu değerler: `APP_TEMPLATE=real-estate`, `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL=https://...`, `SESSION_SECURE_COOKIE=true` (HTTPS kullanıyorsanız).
+Zorunlu değerler: `APP_TEMPLATE`, `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL=https://...`, `SESSION_SECURE_COOKIE=true` (HTTPS kullanıyorsanız).
 
 ## 4. Kurulum komutları (SSH / cPanel Terminal)
 
@@ -81,7 +83,16 @@ git pull            # ya da dosyaları yeniden yükleyin
 bash deploy.sh
 ```
 
-## 7. Cron (isteğe bağlı)
+## 7. Şablon değiştirme (aynı sunucuda)
+
+```bash
+php artisan template:use corporate --seed
+php artisan optimize
+```
+
+Eski şablonun tabloları silinmez; yeni şablonun migration'ları çalışır, ayarlar yeni şablonun varsayılanlarıyla üzerine yazılır.
+
+## 8. Cron (isteğe bağlı)
 
 Zamanlanmış blog yazıları yayın tarihine göre otomatik görünür; cron gerekmez. Laravel scheduler kullanmak isterseniz cPanel > Cron Jobs:
 
@@ -89,7 +100,7 @@ Zamanlanmış blog yazıları yayın tarihine göre otomatik görünür; cron ge
 * * * * * /usr/local/bin/php /home/cpaneluser/site/artisan schedule:run >> /dev/null 2>&1
 ```
 
-## 8. Sorun giderme
+## 9. Sorun giderme
 
 | Belirti | Çözüm |
 |---|---|

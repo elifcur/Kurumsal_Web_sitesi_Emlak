@@ -37,6 +37,8 @@ class SettingController extends Controller
                     'nav_show_services' => ['label' => 'Menüde Hizmetler bağlantısı', 'type' => 'boolean'],
                     'nav_show_products' => ['label' => 'Menüde Ürünler bağlantısı', 'type' => 'boolean'],
                     'nav_show_blog' => ['label' => 'Menüde Blog bağlantısı', 'type' => 'boolean'],
+                    'header_button_text' => ['label' => 'Üst Menü Buton Metni', 'type' => 'text', 'help' => 'Boş bırakılırsa buton gösterilmez.', 'rules' => ['max:40']],
+                    'header_button_url' => ['label' => 'Üst Menü Buton Bağlantısı', 'type' => 'text', 'rules' => ['max:255']],
                 ],
             ],
             'contact' => [
@@ -48,6 +50,7 @@ class SettingController extends Controller
                     'contact_recipient' => ['label' => 'Form Bildirim E-postası', 'type' => 'email', 'help' => 'İletişim formu mesajları bu adrese gönderilir. Boşsa yukarıdaki e-posta kullanılır.', 'rules' => ['nullable', 'email', 'max:190']],
                     'address' => ['label' => 'Adres', 'type' => 'textarea', 'rules' => ['max:500']],
                     'working_hours' => ['label' => 'Çalışma Saatleri', 'type' => 'text', 'rules' => ['max:100']],
+                    'contact_intro' => ['label' => 'İletişim Sayfası Açıklaması', 'type' => 'text', 'rules' => ['max:255']],
                     'map_embed' => ['label' => 'Google Harita Embed URL', 'type' => 'text', 'help' => 'Google Maps > Paylaş > Harita yerleştir > iframe içindeki src adresi.', 'rules' => ['nullable', 'url', 'max:1000', 'regex:#^https://www\.google\.com/maps/embed#']],
                 ],
             ],
@@ -78,6 +81,8 @@ class SettingController extends Controller
                     'services_intro' => ['label' => 'Hizmetler Bölümü Açıklaması', 'type' => 'text', 'rules' => ['max:255']],
                     'products_intro' => ['label' => 'Ürünler Sayfası Açıklaması', 'type' => 'text', 'rules' => ['max:255']],
                     'blog_intro' => ['label' => 'Blog Sayfası Açıklaması', 'type' => 'text', 'rules' => ['max:255']],
+                    'team_title' => ['label' => 'Ekip Bölümü Başlığı', 'type' => 'text', 'help' => 'Örn. Doktorlarımız, Danışmanlarımız', 'rules' => ['max:120']],
+                    'team_intro' => ['label' => 'Ekip Sayfası Açıklaması', 'type' => 'text', 'rules' => ['max:255']],
                     'cta_title' => ['label' => 'CTA Başlık', 'type' => 'text', 'rules' => ['max:160']],
                     'cta_text' => ['label' => 'CTA Metin', 'type' => 'text', 'rules' => ['max:255']],
                     'cta_button_text' => ['label' => 'CTA Buton Metni', 'type' => 'text', 'rules' => ['max:40']],
@@ -116,6 +121,10 @@ class SettingController extends Controller
 
         if (! $template->supports('blog')) {
             $hidden = [...$hidden, 'blog_label', 'nav_show_blog', 'show_blog', 'blog_intro'];
+        }
+
+        if (! $template->supports('team')) {
+            $hidden = [...$hidden, 'team_title', 'team_intro'];
         }
 
         return array_map(function (array $group) use ($hidden): array {

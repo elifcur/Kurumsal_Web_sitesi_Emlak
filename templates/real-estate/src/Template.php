@@ -41,6 +41,16 @@ class Template extends BaseTemplate
         ];
     }
 
+    public function icon(): string
+    {
+        return 'home';
+    }
+
+    public function contactSubjects(): array
+    {
+        return ['Bilgi almak istiyorum', 'Mülkümü satmak istiyorum', 'Mülkümü kiraya vermek istiyorum', 'Ücretsiz değerleme istiyorum', 'Diğer'];
+    }
+
     public function defaultSettings(): array
     {
         return [
@@ -50,6 +60,11 @@ class Template extends BaseTemplate
                 'primary_color' => '#1f3d2e',
                 'services_label' => 'Hizmetlerimiz',
                 'blog_label' => 'Blog',
+                'header_button_text' => 'Ücretsiz Değerleme',
+                'header_button_url' => '/iletisim?konu=Ücretsiz değerleme istiyorum',
+            ],
+            'contact' => [
+                'contact_intro' => 'Mülk alım-satımı, kiralama ve ücretsiz değerleme için bize ulaşın.',
             ],
             'seo' => [
                 'meta_title' => 'Prestij Emlak | Satılık ve Kiralık İlanlar',
@@ -65,6 +80,9 @@ class Template extends BaseTemplate
                 'about_title' => 'Neden Prestij Emlak?',
                 'about_text' => "15 yılı aşkın süredir gayrimenkul sektöründe güvenilir çözüm ortağınızız. Portföyümüzdeki her ilanı yerinde inceliyor, tapu ve kredi süreçlerinde yanınızda oluyoruz.\nAmacımız sadece bir mülk satmak değil, sizin için doğru yatırımı bulmaktır.",
                 'services_intro' => 'Alım, satım, kiralama ve değerlemede uçtan uca danışmanlık.',
+                'blog_intro' => 'Emlak piyasası, yatırım ve kiralama hakkında faydalı içerikler.',
+                'team_title' => 'Uzman Danışmanlarımız',
+                'team_intro' => 'Bölgesini tanıyan, deneyimli danışmanlarımız size en doğru mülkü bulmak için çalışır.',
                 'cta_title' => 'Mülkünüzü satmak veya kiraya vermek mi istiyorsunuz?',
                 'cta_text' => 'Ücretsiz ekspertiz için hemen bize ulaşın, portföyümüze ekleyelim.',
                 'cta_button_text' => 'Ücretsiz Değerleme İste',
@@ -75,7 +93,6 @@ class Template extends BaseTemplate
                 'listings_label' => 'İlanlar',
                 'listings_home_title' => 'Sizin İçin Seçtiklerimiz',
                 'listings_home_intro' => null,
-                'team_home_title' => 'Uzman Danışmanlarımız',
                 'hero_card_title' => 'Güvenli Yatırım',
                 'hero_card_text' => 'Doğru Adres',
                 'about_quote' => 'Amacımız sadece bir mülk satmak değil, sizin için doğru yatırımı bulmaktır.',
@@ -90,7 +107,6 @@ class Template extends BaseTemplate
             'listings_label' => ['label' => 'İlanlar menü etiketi', 'type' => 'text', 'rules' => ['max:50']],
             'listings_home_title' => ['label' => 'Ana sayfa ilan bölümü başlığı', 'type' => 'text', 'rules' => ['max:120']],
             'listings_home_intro' => ['label' => 'Ana sayfa ilan bölümü açıklaması', 'type' => 'text', 'rules' => ['max:255']],
-            'team_home_title' => ['label' => 'Ana sayfa danışmanlar başlığı', 'type' => 'text', 'rules' => ['max:120']],
             'hero_card_title' => ['label' => 'Hero bilgi kartı 1. satır', 'type' => 'text', 'help' => 'Boş bırakılırsa kart gösterilmez.', 'rules' => ['max:60']],
             'hero_card_text' => ['label' => 'Hero bilgi kartı 2. satır', 'type' => 'text', 'rules' => ['max:60']],
             'about_quote' => ['label' => 'İstatistik şeridi alıntısı', 'type' => 'text', 'rules' => ['max:255']],

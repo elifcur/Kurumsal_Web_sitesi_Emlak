@@ -20,7 +20,7 @@ class TemplateManagerTest extends TestCase
 
         $this->basePath = dirname(__DIR__, 2).'/templates';
         TemplateManager::registerAutoloader($this->basePath);
-        $this->activeKey = getenv('APP_TEMPLATE') ?: (new TemplateManager($this->basePath, 'x'))->keys()[0] ?? 'real-estate';
+        $this->activeKey = getenv('APP_TEMPLATE') ?: (new TemplateManager($this->basePath, 'x'))->keys()[0] ?? 'corporate';
     }
 
     public function test_it_discovers_every_template_directory(): void
@@ -43,7 +43,7 @@ class TemplateManagerTest extends TestCase
             $this->assertNotEmpty($template->name());
             $this->assertFileExists($template->path('css/app.css'));
             $this->assertFileExists($template->path('js/app.js'));
-            $this->assertFileExists($template->path('views/layouts/app.blade.php'));
+            // Layout, partials and section pages fall back to resources/views/site; only the home page is mandatory.
             $this->assertFileExists($template->path('views/home.blade.php'));
         }
     }

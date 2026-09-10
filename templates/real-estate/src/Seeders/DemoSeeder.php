@@ -46,10 +46,10 @@ class DemoSeeder extends Seeder
         }
 
         $agents = collect([
-            ['name' => 'Ayşe Demir', 'title' => 'Kurucu Ortak · Kıdemli Danışman', 'attributes' => [['label' => 'Uzmanlık', 'value' => 'Lüks konut, villa'], ['label' => 'Bölge', 'value' => 'Bodrum, Çeşme'], ['label' => 'Deneyim', 'value' => '15 yıl']]],
-            ['name' => 'Mehmet Kaya', 'title' => 'Gayrimenkul Danışmanı', 'attributes' => [['label' => 'Uzmanlık', 'value' => 'Ticari gayrimenkul'], ['label' => 'Bölge', 'value' => 'Maslak, Ataşehir'], ['label' => 'Deneyim', 'value' => '9 yıl']]],
-            ['name' => 'Elif Şahin', 'title' => 'Kiralama Uzmanı', 'attributes' => [['label' => 'Uzmanlık', 'value' => 'Kiralık konut'], ['label' => 'Bölge', 'value' => 'Kadıköy, Üsküdar'], ['label' => 'Deneyim', 'value' => '6 yıl']]],
-            ['name' => 'Can Yıldız', 'title' => 'Yatırım Danışmanı', 'attributes' => [['label' => 'Uzmanlık', 'value' => 'Arsa, proje'], ['label' => 'Bölge', 'value' => 'Çekmeköy, Beykoz'], ['label' => 'Deneyim', 'value' => '11 yıl']]],
+            ['name' => 'Ayşe Demir', 'title' => 'Kurucu Ortak · Kıdemli Danışman', 'attributes' => [['label' => 'Bölge', 'value' => 'Bodrum, Çeşme'], ['label' => 'Uzmanlık', 'value' => 'Lüks konut, villa'], ['label' => 'Deneyim', 'value' => '15 yıl']]],
+            ['name' => 'Mehmet Kaya', 'title' => 'Gayrimenkul Danışmanı', 'attributes' => [['label' => 'Bölge', 'value' => 'Maslak, Ataşehir'], ['label' => 'Uzmanlık', 'value' => 'Ticari gayrimenkul'], ['label' => 'Deneyim', 'value' => '9 yıl']]],
+            ['name' => 'Elif Şahin', 'title' => 'Kiralama Uzmanı', 'attributes' => [['label' => 'Bölge', 'value' => 'Kadıköy, Üsküdar'], ['label' => 'Uzmanlık', 'value' => 'Kiralık konut'], ['label' => 'Deneyim', 'value' => '6 yıl']]],
+            ['name' => 'Can Yıldız', 'title' => 'Yatırım Danışmanı', 'attributes' => [['label' => 'Bölge', 'value' => 'Çekmeköy, Beykoz'], ['label' => 'Uzmanlık', 'value' => 'Arsa, proje'], ['label' => 'Deneyim', 'value' => '11 yıl']]],
         ])->map(fn (array $agent, int $i) => TeamMember::factory()->create($agent + ['sort_order' => $i, 'is_featured' => true]));
 
         /*

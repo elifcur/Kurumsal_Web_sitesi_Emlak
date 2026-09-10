@@ -2,75 +2,27 @@
 @import '../../../resources/css/base.css';
 
 @source '../views/**/*.blade.php';
-@source '../../../resources/views/components/*.blade.php';
-@source '../../../resources/views/errors/*.blade.php';
-@source '../../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
 /*
  * Emlak şablonu: koyu orman yeşili (primary) + altın vurgu + krem zeminler.
- * --color-primary sitenin marka rengi; admin panelinden değiştirilebilir
- * (layouts/app.blade.php içinde inline :root ile ezilir).
+ * Ortak bileşen sınıfları base.css'ten gelir; burada yalnızca renk/font
+ * tokenları ve sektöre özel sınıflar tanımlanır. --color-primary admin
+ * panelinden değiştirilebilir (layouts/app.blade.php içinde inline :root ile ezilir).
  */
 @theme {
-    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-    --font-display: 'Instrument Serif', 'Georgia', serif;
-
     --color-primary: #1f3d2e;
     --color-primary-dark: #162c21;
     --color-primary-light: #e8efea;
-    --color-primary-contrast: #ffffff;
     --color-accent: #d4b26a;
     --color-accent-dark: #b8964f;
     --color-sand: #f7f4ee;
     --color-ink: #14241c;
 }
 
-@layer base {
-    body {
-        @apply bg-white text-slate-700 antialiased;
-        font-family: var(--font-sans);
-    }
-
-    h1, h2 {
-        font-family: var(--font-display);
-        font-weight: 400;
-        letter-spacing: -0.01em;
-    }
-
-    h1 em, h2 em {
-        font-style: italic;
-        color: var(--color-accent);
-    }
-}
-
 @layer components {
-    .btn-primary { @apply btn rounded-md bg-primary text-primary-contrast hover:bg-primary-dark; }
-    .btn-accent { @apply btn rounded-md bg-accent text-ink hover:bg-accent-dark; }
-    .btn-outline { @apply btn rounded-md border border-slate-300 bg-white text-slate-800 hover:border-primary hover:text-primary; }
-    .btn-outline-light { @apply btn rounded-md border border-white/60 text-white hover:bg-white/10; }
-    .btn-light { @apply btn rounded-md bg-white text-ink hover:bg-slate-100; }
-
-    .section { @apply py-16 md:py-24; }
-    .section-title { @apply font-display text-4xl tracking-tight text-ink md:text-5xl; }
-    .section-subtitle { @apply mt-4 max-w-2xl text-lg text-slate-600; }
-    .section-line { @apply mt-4 block h-0.5 w-12 bg-accent; }
-    .eyebrow { @apply mb-3 block text-xs font-medium tracking-[0.25em] text-slate-500 uppercase; }
-    .eyebrow-accent { @apply text-accent; }
-    .link-arrow { @apply inline-flex items-center gap-1.5 text-sm font-medium text-ink underline decoration-accent decoration-2 underline-offset-8 transition hover:text-primary; }
-
     .hero-overlay { background: linear-gradient(90deg, rgba(12, 28, 20, 0.88) 0%, rgba(12, 28, 20, 0.55) 45%, rgba(12, 28, 20, 0.1) 100%); }
     .page-overlay { background: linear-gradient(180deg, rgba(12, 28, 20, 0.75) 0%, rgba(12, 28, 20, 0.85) 100%); }
 
-    .logo-grid { @apply grid grid-cols-2 border-t border-l border-slate-200 sm:grid-cols-3 lg:grid-cols-6; }
-    .logo-grid > * { @apply flex h-24 items-center justify-center border-r border-b border-slate-200 bg-white px-6 text-sm font-semibold text-slate-500 grayscale transition hover:grayscale-0; }
-
-    .card { @apply rounded-lg border border-slate-200/70 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md; }
-
-    .nav-link { @apply relative px-2.5 py-2 text-[13px] xl:px-3 xl:text-sm font-medium whitespace-nowrap text-slate-700 transition hover:text-primary; }
-    .nav-link-active { @apply text-ink; }
-    .nav-link-active::after { content: ''; @apply absolute inset-x-3 -bottom-1 h-0.5 bg-accent; }
-
-    .chip { @apply inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700; }
     .badge-sale { @apply rounded-md bg-primary px-3 py-1 text-xs font-semibold text-white; }
     .badge-rent { @apply rounded-md bg-ink px-3 py-1 text-xs font-semibold text-white; }
 

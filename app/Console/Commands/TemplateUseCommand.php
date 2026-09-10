@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Artisan;
 
 class TemplateUseCommand extends Command
 {
-    protected $signature = 'template:use {key : Şablon anahtarı (örn. clinic)} {--seed : Şablonun varsayılan ayarlarını ve demo içeriğini yükler}';
+    protected $signature = 'template:use {key : Şablon anahtarı (örn. corporate, real-estate)} {--seed : Şablonun varsayılan ayarlarını ve demo içeriğini yükler}';
 
     protected $description = 'Aktif şablonu değiştirir (.env içindeki APP_TEMPLATE) ve önbellekleri temizler';
 

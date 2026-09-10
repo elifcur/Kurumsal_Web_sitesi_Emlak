@@ -1,77 +1,61 @@
-# Emlak Sitesi
+# Kurumsal Web Sitesi & CMS
 
-Laravel tabanlı, cPanel paylaşımlı hosting'de çalışan **emlak ofisi web sitesi** ve yönetim paneli.
+Laravel 13 tabanlı, cPanel paylaşımlı hosting'de çalışan, **farklı sektörlerde yeniden kullanılabilen** kurumsal web sitesi altyapısı: ortak bir CMS çekirdeği + sektöre özel şablonlar.
 
-Tek müşteriye teslim edilmek üzere hazırlanmış paket: sektöre özel tasarım, içerik ve admin ekranları hazır gelir. Site tasarımı ve sektör modülleri `templates/real-estate/` altında toplanmıştır; çekirdek CMS (`app/`, `resources/`) şablondan bağımsızdır.
+Her kurulumda `.env` içindeki `APP_TEMPLATE` ile seçilen **tek şablon** aktiftir. Şablonlar `templates/<anahtar>/` altında yaşar; çekirdek (`app/`, `resources/`) sektör kodu içermez.
 
-## Özellikler
+## Şablonlar
 
-**Emlak modülü** (`templates/real-estate`)
-- İlanlar: satılık / kiralık, tip, fiyat, oda, m², kat, ısıtma, özellikler, galeri, video, harita, sorumlu danışman
-- `/ilanlar` filtre + sıralama, `/ilanlar/{slug}` detay ve talep formu (Mesajlar'a "İlan Talebi" olarak düşer)
-- Danışman kadrosu (Ekip modülü; Bölge / Uzmanlık / Deneyim etiketleri)
-- Site Ayarları > Emlak Ayarları: menü etiketi, ana sayfa bölüm başlıkları, talep formu mesajı
+| Anahtar | Ad | İçerik |
+|---|---|---|
+| `corporate` | Kurumsal (varsayılan) | Sektörden bağımsız: hizmetler, ürün kataloğu, blog, ekip, referanslar, SSS, partnerler |
+| `real-estate` | Emlak | İlan portföyü (satılık/kiralık, filtre, galeri, talep formu), danışman ekibi |
 
-**Ortak çekirdek**
-- **Admin paneli** (`/admin`): Dashboard, Sayfalar, Hizmetler, Blog, Ekip, Müşteri Yorumları, SSS, Partnerler, Medya kütüphanesi, Mesajlar, Site Ayarları, Kullanıcılar & roller, Profil. (Ürünler modülü bu şablonda kapalıdır.)
-- **SEO:** dinamik meta/OG, canonical, JSON-LD (Organization, BreadcrumbList), `sitemap.xml`, `robots.txt`, Türkçe slug'lar
-- **Güvenlik:** rol tabanlı yetki, CSRF, Form Request doğrulama, HTML Purifier, güvenli yükleme + görsel yeniden kodlama, rate limiting, honeypot, güvenlik başlıkları
-- **cPanel uyumu:** `public/uploads` (symlink gerekmez), derlenmiş varlıklar repoda (`public/build`, sunucuda Node gerekmez), MySQL 5.7+/MariaDB uyumlu index uzunlukları
+`php artisan template:list` kurulu şablonları gösterir.
 
-## Gereksinimler
+## Nasıl çalışır
 
-| Bileşen | Sürüm |
-|---|---|
-| PHP | 8.3+ (`mbstring`, `pdo_mysql`, `fileinfo`, `gd`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`, `bcmath`) |
-| MySQL / MariaDB | MySQL 5.7+ / MariaDB 10.3+ (utf8mb4) — geliştirmede SQLite |
-| Composer | 2.x |
-| Node.js | Yalnızca geliştirmede (varlıkları derlemek için) |
+- **Çekirdek CMS** — Admin paneli (`/admin`): Sayfalar, Hizmetler, Ürünler + Kategoriler, Blog, Ekip, Müşteri Yorumları, SSS, Partnerler, Medya, Mesajlar, Site Ayarları, Kullanıcılar & roller. Şablon `features()` ile istemediği modülleri kapatır; kapalı modülün rotası, menüsü ve ayarı görünmez.
+- **Fallback view'lar** — `resources/views/site/` altında nötr layout, header/footer, hizmet/ürün/blog/ekip/sayfa/iletişim sayfaları ve kart bileşenleri bulunur. Şablon yalnızca `views/home.blade.php` sağlamak zorundadır; diğer her sayfayı ve bileşeni aynı göreli yolla `views/` altına koyarak ezebilir (`templates/real-estate/views/partials/footer-links.blade.php` örneği).
+- **Tasarım tokenları** — `resources/css/base.css` ortak sınıfları (`.btn-primary`, `.section`, `.card`, `.nav-link`…) ve varsayılan renkleri tanımlar. Şablon `css/app.css` içindeki `@theme` bloğunda renkleri değiştirir.
+- **Şablon kancaları** — `Template` sınıfı: `features()`, `defaultSettings()`, `settingFields()` (Site Ayarları'nda otomatik sekme), `adminMenu()`, `publicMenu()`, `dashboardStats()`, `sitemapEntries()`, `messageTypes()`, `contactSubjects()`, `icon()`, `fonts()`, `homeData()`.
+- **SEO & güvenlik** — dinamik meta/OG, canonical, JSON-LD, `sitemap.xml`, `robots.txt`; rol tabanlı yetki, CSRF, Form Request, HTML Purifier, güvenli yükleme, rate limiting, honeypot, güvenlik başlıkları.
+- **cPanel uyumu** — `public/uploads` (symlink gerekmez), derlenmiş varlıklar repoda (`public/build`), MySQL 5.7+/MariaDB uyumlu index uzunlukları.
 
 ## Geliştirme
 
 ```bash
 composer install && npm install
 cp .env.example .env && php artisan key:generate
-php artisan migrate --seed        # şemayı ve demo içeriği yükler
-npm run build                     # ya da: npm run dev
+php artisan migrate --seed        # aktif şablonun demo içeriğini de yükler (local)
+npm run build                     # tüm şablonların CSS/JS'ini derler (ya da: npm run dev)
 php artisan serve
 ```
 
-Varsayılan yönetici: `admin@example.com` / `password` (`.env` içindeki `ADMIN_*` ile değiştirilir).
-
-Testler:
+Varsayılan yönetici: `admin@example.com` / `password` (`.env` içindeki `ADMIN_*`).
 
 ```bash
-php artisan test          # tümü
-composer test             # config:clear + test
+php artisan template:use real-estate --seed   # şablonu değiştir, ayar + demo içeriğini yükle
+php artisan test                              # aktif şablonla
+composer test:templates                       # tüm şablonlarla
 ```
 
-## Kurulum (sunucu)
+## Yeni şablon ekleme
 
-Kısa yol için [KURULUM.md](KURULUM.md), cPanel'e özel tüm adımlar ve sorun giderme için [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+1. `templates/corporate` klasörünü `templates/<anahtar>/` olarak kopyalayın.
+2. `src/Template.php` içinde `key()`, `name()`, `description()`, `features()`, `defaultSettings()` değerlerini güncelleyin.
+3. `css/app.css` içindeki `@theme` renklerini değiştirin; `views/home.blade.php` dosyasını uyarlayın.
+4. Sektör modeli gerekiyorsa `templates/real-estate` yapısını izleyin: `routes.php`, `database/migrations/`, `src/Models`, `src/Http`, `views/admin/…`.
+5. `npm run build` ile derleyin; `APP_TEMPLATE=<anahtar> php artisan test` ile doğrulayın.
 
-Özetle: `.env.production.example` dosyasını `.env` olarak kopyalayıp doldurun, ardından:
+`Templates\<Studly>\…` ad alanı `templates/<anahtar>/src/` dizinine otomatik autoload edilir; `composer.json` düzenlemek gerekmez.
+
+## Müşteriye teslim
 
 ```bash
-bash deploy.sh            # örnek içerikle: SEED_DEMO=1 bash deploy.sh
+php artisan template:use <anahtar>   # müşterinin şablonu
+npm run build                        # public/build güncel olsun
+php artisan template:prune --force   # diğer şablon klasörlerini sil
 ```
 
-`deploy.sh` sırasıyla şablon kontrolü, `composer install --no-dev`, `APP_KEY`, dosya izinleri, migration, seed ve `optimize` adımlarını çalıştırır. `storage:link` gerekmez; yüklemeler `public/uploads` içine yazılır.
-
-## Dizin yapısı
-
-```
-app/                    Çekirdek CMS: modeller, admin controller'ları, servisler
-resources/views/        Admin paneli ve ortak layout'lar
-templates/real-estate/  Emlak şablonu
-  ├─ src/               Template.php, modeller, controller'lar, seeder'lar
-  ├─ views/             Site tasarımı (Blade)
-  ├─ css/ js/           Tailwind kaynakları (vite girdisi)
-  ├─ routes.php         Şablona özel rotalar
-  └─ database/          Şablona özel migration'lar
-public/build/           Derlenmiş CSS/JS — repoya dahildir, sunucuda Node gerekmez
-deploy/cpanel/          public_html'e kopyalanacak index.php ve .htaccess
-docs/DEPLOYMENT.md      cPanel deploy rehberi
-```
-
-Aktif şablon `.env` içindeki `APP_TEMPLATE` ile seçilir (bu pakette `real-estate`). `php artisan template:list` kurulu şablonları gösterir. `Templates\RealEstate\...` ad alanı `templates/real-estate/src/` dizinine otomatik autoload edilir; `composer.json` düzenlemek gerekmez.
+Sunucu kurulumu için [KURULUM.md](KURULUM.md) (kısa) ve [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) (cPanel ayrıntıları).

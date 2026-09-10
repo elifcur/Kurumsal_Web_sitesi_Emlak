@@ -29,6 +29,8 @@ class SettingsSeeder extends Seeder
                 'nav_show_services' => '1',
                 'nav_show_products' => '1',
                 'nav_show_blog' => '1',
+                'header_button_text' => 'Teklif Alın',
+                'header_button_url' => '/iletisim',
             ],
             'contact' => [
                 'phone' => '+90 (212) 000 00 00',
@@ -38,6 +40,7 @@ class SettingsSeeder extends Seeder
                 'working_hours' => 'Pzt - Cum: 09:00 - 18:00',
                 'map_embed' => null,
                 'contact_recipient' => null,
+                'contact_intro' => 'Sorularınız, teklif ve iş birliği talepleriniz için bize ulaşın.',
             ],
             'social' => [
                 'facebook' => null,
@@ -68,6 +71,8 @@ class SettingsSeeder extends Seeder
                 'services_intro' => 'İhtiyaçlarınıza özel, uçtan uca çözümler sunuyoruz.',
                 'products_intro' => null,
                 'blog_intro' => null,
+                'team_title' => 'Ekibimiz',
+                'team_intro' => null,
                 'cta_title' => 'Projeniz için hemen teklif alın',
                 'cta_text' => 'Uzman ekibimiz size en kısa sürede dönüş yapacaktır.',
                 'cta_button_text' => 'Teklif Al',
